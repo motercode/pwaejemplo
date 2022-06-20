@@ -1,0 +1,77 @@
+stages:    
+  - prepare      
+  - build
+
+
+  
+variables:
+   CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"  
+#  este test se hace sobre url publicas asi que solo poner si se esta haciendo un deploy en pre
+#   a11y_urls: ""
+
+#include:
+#  - template: "Verify/Accessibility.gitlab-ci.yml"
+
+default:
+   image: cypress/base:16.13.0
+   cache: &cache
+     key: "$CI_COMMIT_REF_SLUG"
+     paths:
+       - node_modules/
+       - cache/Cypress
+     policy: pull
+
+prepare:
+  stage: prepare
+  interruptible: true
+  cache:
+    <<: *cache
+    policy: push
+  script:
+    - npm i
+    - npm install -g pnpm
+  
+
+lint:
+  stage: test
+  cache:
+    <<: *cache
+    policy: pull 
+  interruptible: true
+  script:
+    - CI=true npm run lint:ci
+  artifacts:
+    reports:
+      junit: unitTestReports/junitStyleReport.xml
+
+unit-test-coverage: 
+  stage: test
+  needs: [lint]
+  cache:
+    <<: *cache
+    policy: pull 
+  script:
+    - CI=true npm run test:and:coverage
+  artifacts:
+    reports:
+      junit: unitTestReports/junitStyleReport.xml
+      # cobertura: coverage/cobertura-coverage.xml
+# esto es si cambia de version por actualizacion ver que ha cambiado la key
+      coverage_report:
+         coverage_format: cobertura
+         path: coverage/cobertura-coverage.xml
+
+
+build-site:
+  stage: build
+  cache:
+    <<: *cache
+    policy: pull
+  script:
+    - CI=true npm run build:noSSG 
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - dist
+      - ./package-lock.json
+
