@@ -98,7 +98,7 @@ const removeEndOfAlarm = () => {
 <template>
 
     <form h-full text-center flex :class="{ bgRed: (isFinished || setFlash)}" name="selecciones" id="selecciones" method="post">
-        <div ma >
+        <div ma >NAcho
             <div flex w-full row>
                 <label col-sm for="tiempo"> tiempo entre alarmas en segundos </label>
                 <input col-sm border type="text" name="tiempo" v-model="tiempo" />

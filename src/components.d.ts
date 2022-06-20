@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
     Alert: typeof import('./components/vuetifyComponentes/Alert.vue')['default']
     ComponentsNavigation: typeof import('./components/vuetifyComponentes/ComponentsNavigation.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
+    Encuesta: typeof import('./components/encuesta.vue')['default']
     ErrorComponent: typeof import('./components/ErrorComponent.vue')['default']
     EVSelect: typeof import('./components/eComponents/EVSelect.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
