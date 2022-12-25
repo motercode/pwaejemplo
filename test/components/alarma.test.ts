@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import Alarma from '~/components/Alarma.vue'
 
 describe('Alerma.vue', () => {
-  it('should render', () => {
+  it.skip('should render', () => {
     const wrapper = mount(Alarma, { props: { tiempo: 100 , modo: 'vibracion' , repeticiones: 10} })
     console.log(wrapper.html())
     expect(wrapper.text()).toContain('10 repeticiones')
